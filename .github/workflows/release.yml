@@ -214,20 +214,20 @@ jobs:
           echo "GitHub Release created: $RELEASE_URL"
 
       # ── 13. Guard: confirm version is not already on PyPI ───────────────────
-      - name: Check version does not already exist on PyPI
-        run: |
-          PKG_NAME=$(python3 -c "import toml; print(toml.load('pyproject.toml')['project']['name'])")
-          VERSION="${{ steps.issue.outputs.version }}"
-          HTTP=$(curl -s -o /dev/null -w "%{http_code}" "https://pypi.org/pypi/$PKG_NAME/$VERSION/json")
-          if [[ "$HTTP" == "200" ]]; then
-            echo "ERROR: $PKG_NAME $VERSION already exists on PyPI."
-            exit 1
-          fi
-          echo "$PKG_NAME $VERSION is not yet on PyPI — proceeding."
+      # - name: Check version does not already exist on PyPI
+      #   run: |
+      #     PKG_NAME=$(python3 -c "import toml; print(toml.load('pyproject.toml')['project']['name'])")
+      #     VERSION="${{ steps.issue.outputs.version }}"
+      #     HTTP=$(curl -s -o /dev/null -w "%{http_code}" "https://pypi.org/pypi/$PKG_NAME/$VERSION/json")
+      #     if [[ "$HTTP" == "200" ]]; then
+      #       echo "ERROR: $PKG_NAME $VERSION already exists on PyPI."
+      #       exit 1
+      #     fi
+      #     echo "$PKG_NAME $VERSION is not yet on PyPI — proceeding."
 
       # ── 14. Publish to PyPI (OIDC trusted publishing) ───────────────────────
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@v1.14.2
+      # - name: Publish to PyPI
+      #   uses: pypa/gh-action-pypi-publish@v1.14.2
 
       # ── 15. Close the release issue ─────────────────────────────────────────
       - name: Close release issue
